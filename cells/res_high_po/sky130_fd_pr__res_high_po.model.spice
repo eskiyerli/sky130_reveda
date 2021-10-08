@@ -22,8 +22,8 @@
 *         }
 * }
 .subckt  sky130_fd_pr__res_high_po r0 r1 b
-+ w=1 l=1
-.param  mult = 1.0
++ PARAMS: w=1 l=1 mult = 1.0
+.param  
 + rsheet = 317.3885
 + rbody_dw = -0.001
 + rhead_ps = 345.8312
@@ -36,8 +36,9 @@
 + weff = {w+rbody_dw-0.0672*max(0.69-w,0)}
 + leff = {l+0.247}
 + res_match = {(body_pelgrom/sqrt(w*l*mult))*sky130_fd_pr__res_high_po__slope_spectre}
-rhead r0 rb rhead_model w = {weff+0.1558} l = 1.0
-rbody rb r1 rbody_model w = {weff} l = {leff}
+* added m parameters as a kludge. MHE. 2021/09/29
+rhead r0 rb rhead_model w = {weff+0.1558} l = 1.0 m=mult 
+rbody rb r1 rbody_model w = {weff} l = {leff} m=mult 
 xc0 r0 r1 b sky130_fd_pr__model__parasitic__res_po w = {w} l = {l}
 .model rhead_model r sw_et=0 isnoisy=0
 + rsh = {345.8312*(1+sky130_fd_pr__res_high_po__var)*(1+rend_match)}
